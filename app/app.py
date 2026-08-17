@@ -1,59 +1,47 @@
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
 from flask import Flask, render_template, request
-import numpy as np
-import pickle  
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from src.predict import InputValidationError, load_artifacts, predict_payload
 
 app = Flask(__name__)
+model, metadata = load_artifacts()
 
-model = pickle.load(open('models/logreg_pipeline.pkl', 'rb'))
 
-
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route('/intro')
+
+@app.route("/intro")
 def intro():
-    return render_template('intro.html')
+    return render_template("intro.html")
 
-@app.route('/predict', methods=['GET', 'POST'])
+
+@app.route("/predict", methods=["GET", "POST"])
 def predict():
-    if request.method == 'POST':
-        try:
-           
-            features = [
-                float(request.form['temp']),
-                float(request.form['humidity']),
-                float(request.form['cloud_cover']),
-                float(request.form['annual_rainfall']),
-                float(request.form['rain_janfeb']),
-                float(request.form['rain_mar_may']),
-                float(request.form['rain_jun_sep']),
-                float(request.form['rain_octdec']),
-                float(request.form['avg_june']),
-                float(request.form['sub'])
-            ]
+    if request.method == "GET":
+        return render_template("predict.html")
+    payload = {
+        "Temp": request.form.get("temp"), "Humidity": request.form.get("humidity"),
+        "Cloud Cover": request.form.get("cloud_cover"), "Jan-Feb": request.form.get("rain_janfeb"),
+        "Mar-May": request.form.get("rain_mar_may"), "Oct-Dec": request.form.get("rain_octdec"),
+        "avgjune": request.form.get("avg_june"), "sub": request.form.get("sub"),
+    }
+    try:
+        result = predict_payload(model, payload)
+    except InputValidationError as exc:
+        return render_template("predict.html", error=str(exc), values=request.form), 400
+    percent = round(result["probability"] * 100, 2)
+    template = "high.html" if result["prediction"] == 1 else "low.html"
+    return render_template(template, percent=percent, model_name=metadata["model_name"])
 
-            final_input = np.array([features])  
 
-           
-            probability = model.predict_proba(final_input)[0][1]
-            percent = round(probability * 100, 2)
-
-            print(final_input)
-            print(f"Predicted probability: {percent}%")
-
-            
-            if percent <= 50:
-                return render_template('low.html', percent=percent)
-            elif percent <= 75:
-                return render_template('mid.html', percent=percent)
-            else:
-                return render_template('high.html', percent=percent)
-
-        except Exception as e:
-            return f"Error: {e}"
-            
-    return render_template('predict.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=False)

@@ -1,0 +1,722 @@
+{
+  "methodology": {
+    "random_state": 42,
+    "test_size": 0.2,
+    "stratified_holdout": true,
+    "cv": "5-fold StratifiedKFold on training partition only",
+    "selection_metric": "mean cross-validation recall; F1 then ROC-AUC as tie-breakers",
+    "test_set_used_for_selection": false,
+    "train_rows": 92,
+    "test_rows": 23,
+    "train_class_counts": {
+      "0": 79,
+      "1": 13
+    },
+    "test_class_counts": {
+      "0": 20,
+      "1": 3
+    }
+  },
+  "audit": {
+    "rows": 115,
+    "features_original": 10,
+    "features_modeled": 8,
+    "class_counts": {
+      "0": 99,
+      "1": 16
+    },
+    "missing_values": 0,
+    "duplicate_rows": 0,
+    "annual_seasonal_sum_max_absolute_difference": 0.1000000000003638,
+    "jun_sep_2400_rule_accuracy": 1.0
+  },
+  "excluded_features": {
+    "ANNUAL": "Near-exact sum of seasonal rainfall and unavailable until year end.",
+    "Jun-Sep": "A >2400 mm threshold perfectly reproduces the provided target; label provenance is undocumented."
+  },
+  "tuned_models": [
+    "Logistic Regression",
+    "XGBoost"
+  ],
+  "selected_model": "Logistic Regression (tuned)",
+  "results": {
+    "Dummy majority": {
+      "kind": "untuned",
+      "cv": {
+        "accuracy": {
+          "mean": 0.85906432748538,
+          "std": 0.02456140350877191,
+          "fold_values": [
+            0.8421052631578947,
+            0.8421052631578947,
+            0.8888888888888888,
+            0.8888888888888888,
+            0.8333333333333334
+          ]
+        },
+        "precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "fold_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "recall": {
+          "mean": 0.0,
+          "std": 0.0,
+          "fold_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "f1": {
+          "mean": 0.0,
+          "std": 0.0,
+          "fold_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.5,
+          "std": 0.0,
+          "fold_values": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      "test": {
+        "accuracy": 0.8695652173913043,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": 0.5,
+        "confusion_matrix": [
+          [
+            20,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      "training_seconds": 0.0009772998746484518,
+      "inference_ms_per_row": 0.02358584781177342,
+      "parameters": {
+        "memory": null,
+        "steps": [
+          [
+            "preprocess",
+            "ColumnTransformer(transformers=[('numeric', 'passthrough',\n                                 ['Temp', 'Humidity', 'Cloud Cover', 'Jan-Feb',\n                                  'Mar-May', 'Oct-Dec', 'avgjune', 'sub'])],\n                  verbose_feature_names_out=False)"
+          ],
+          [
+            "model",
+            "DummyClassifier()"
+          ]
+        ],
+        "transform_input": null,
+        "verbose": false
+      }
+    },
+    "Logistic Regression": {
+      "kind": "untuned",
+      "cv": {
+        "accuracy": {
+          "mean": 0.7286549707602339,
+          "std": 0.11930971163795641,
+          "fold_values": [
+            0.631578947368421,
+            0.7894736842105263,
+            0.7777777777777778,
+            0.5555555555555556,
+            0.8888888888888888
+          ]
+        },
+        "precision": {
+          "mean": 0.33833333333333326,
+          "std": 0.19318960174456135,
+          "fold_values": [
+            0.16666666666666666,
+            0.4,
+            0.3333333333333333,
+            0.125,
+            0.6666666666666666
+          ]
+        },
+        "recall": {
+          "mean": 0.6333333333333333,
+          "std": 0.22110831935702666,
+          "fold_values": [
+            0.3333333333333333,
+            0.6666666666666666,
+            1.0,
+            0.5,
+            0.6666666666666666
+          ]
+        },
+        "f1": {
+          "mean": 0.4177777777777778,
+          "std": 0.17951924825440632,
+          "fold_values": [
+            0.2222222222222222,
+            0.5,
+            0.5,
+            0.2,
+            0.6666666666666666
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.7959722222222222,
+          "std": 0.09102723103623145,
+          "fold_values": [
+            0.75,
+            0.6666666666666666,
+            0.9375,
+            0.78125,
+            0.8444444444444444
+          ]
+        }
+      },
+      "test": {
+        "accuracy": 0.8260869565217391,
+        "precision": 0.4,
+        "recall": 0.6666666666666666,
+        "f1": 0.5,
+        "roc_auc": 0.6833333333333333,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "training_seconds": 0.006059200037270784,
+      "inference_ms_per_row": 0.04300580430856865,
+      "parameters": {
+        "memory": null,
+        "steps": [
+          [
+            "preprocess",
+            "ColumnTransformer(transformers=[('numeric', StandardScaler(),\n                                 ['Temp', 'Humidity', 'Cloud Cover', 'Jan-Feb',\n                                  'Mar-May', 'Oct-Dec', 'avgjune', 'sub'])],\n                  verbose_feature_names_out=False)"
+          ],
+          [
+            "model",
+            "LogisticRegression(class_weight='balanced', max_iter=2000, random_state=42)"
+          ]
+        ],
+        "transform_input": null,
+        "verbose": false
+      }
+    },
+    "Decision Tree": {
+      "kind": "untuned",
+      "cv": {
+        "accuracy": {
+          "mean": 0.7286549707602339,
+          "std": 0.04628388055534358,
+          "fold_values": [
+            0.6842105263157895,
+            0.7368421052631579,
+            0.7777777777777778,
+            0.6666666666666666,
+            0.7777777777777778
+          ]
+        },
+        "precision": {
+          "mean": 0.19666666666666666,
+          "std": 0.16746475582773962,
+          "fold_values": [
+            0.0,
+            0.25,
+            0.3333333333333333,
+            0.0,
+            0.4
+          ]
+        },
+        "recall": {
+          "mean": 0.4,
+          "std": 0.38873012632302006,
+          "fold_values": [
+            0.0,
+            0.3333333333333333,
+            1.0,
+            0.0,
+            0.6666666666666666
+          ]
+        },
+        "f1": {
+          "mean": 0.2571428571428571,
+          "std": 0.22406267344797318,
+          "fold_values": [
+            0.0,
+            0.2857142857142857,
+            0.5,
+            0.0,
+            0.5
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.5925,
+          "std": 0.19079784968506444,
+          "fold_values": [
+            0.40625,
+            0.5729166666666666,
+            0.875,
+            0.375,
+            0.7333333333333333
+          ]
+        }
+      },
+      "test": {
+        "accuracy": 0.782608695652174,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": 0.45,
+        "confusion_matrix": [
+          [
+            18,
+            2
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      "training_seconds": 0.0020292000845074654,
+      "inference_ms_per_row": 0.04109139129033555,
+      "parameters": {
+        "memory": null,
+        "steps": [
+          [
+            "preprocess",
+            "ColumnTransformer(transformers=[('numeric', 'passthrough',\n                                 ['Temp', 'Humidity', 'Cloud Cover', 'Jan-Feb',\n                                  'Mar-May', 'Oct-Dec', 'avgjune', 'sub'])],\n                  verbose_feature_names_out=False)"
+          ],
+          [
+            "model",
+            "DecisionTreeClassifier(class_weight='balanced', random_state=42)"
+          ]
+        ],
+        "transform_input": null,
+        "verbose": false
+      }
+    },
+    "Random Forest": {
+      "kind": "untuned",
+      "cv": {
+        "accuracy": {
+          "mean": 0.8368421052631578,
+          "std": 0.03539823614133695,
+          "fold_values": [
+            0.8421052631578947,
+            0.8421052631578947,
+            0.8888888888888888,
+            0.8333333333333334,
+            0.7777777777777778
+          ]
+        },
+        "precision": {
+          "mean": 0.0,
+          "std": 0.0,
+          "fold_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "recall": {
+          "mean": 0.0,
+          "std": 0.0,
+          "fold_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "f1": {
+          "mean": 0.0,
+          "std": 0.0,
+          "fold_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.7813888888888889,
+          "std": 0.11090727831263399,
+          "fold_values": [
+            0.8541666666666666,
+            0.6145833333333333,
+            0.90625,
+            0.6875,
+            0.8444444444444444
+          ]
+        }
+      },
+      "test": {
+        "accuracy": 0.8260869565217391,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": 0.7,
+        "confusion_matrix": [
+          [
+            19,
+            1
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      "training_seconds": 0.7254230999387801,
+      "inference_ms_per_row": 1.1728674782764004,
+      "parameters": {
+        "memory": null,
+        "steps": [
+          [
+            "preprocess",
+            "ColumnTransformer(transformers=[('numeric', 'passthrough',\n                                 ['Temp', 'Humidity', 'Cloud Cover', 'Jan-Feb',\n                                  'Mar-May', 'Oct-Dec', 'avgjune', 'sub'])],\n                  verbose_feature_names_out=False)"
+          ],
+          [
+            "model",
+            "RandomForestClassifier(class_weight='balanced', n_estimators=300, n_jobs=1,\n                       random_state=42)"
+          ]
+        ],
+        "transform_input": null,
+        "verbose": false
+      }
+    },
+    "XGBoost": {
+      "kind": "untuned",
+      "cv": {
+        "accuracy": {
+          "mean": 0.8245614035087719,
+          "std": 0.06721331234243091,
+          "fold_values": [
+            0.8947368421052632,
+            0.8947368421052632,
+            0.8333333333333334,
+            0.7222222222222222,
+            0.7777777777777778
+          ]
+        },
+        "precision": {
+          "mean": 0.5066666666666667,
+          "std": 0.4165466493816882,
+          "fold_values": [
+            1.0,
+            1.0,
+            0.0,
+            0.2,
+            0.3333333333333333
+          ]
+        },
+        "recall": {
+          "mean": 0.29999999999999993,
+          "std": 0.1632993161855452,
+          "fold_values": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.0,
+            0.5,
+            0.3333333333333333
+          ]
+        },
+        "f1": {
+          "mean": 0.32380952380952377,
+          "std": 0.18356509778472746,
+          "fold_values": [
+            0.5,
+            0.5,
+            0.0,
+            0.2857142857142857,
+            0.3333333333333333
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.7148611111111111,
+          "std": 0.0815593588274557,
+          "fold_values": [
+            0.7708333333333333,
+            0.6458333333333334,
+            0.84375,
+            0.625,
+            0.6888888888888889
+          ]
+        }
+      },
+      "test": {
+        "accuracy": 0.8695652173913043,
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285714,
+        "roc_auc": 0.7,
+        "confusion_matrix": [
+          [
+            18,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "training_seconds": 0.05399719998240471,
+      "inference_ms_per_row": 0.12786971739209865,
+      "parameters": {
+        "memory": null,
+        "steps": [
+          [
+            "preprocess",
+            "ColumnTransformer(transformers=[('numeric', 'passthrough',\n                                 ['Temp', 'Humidity', 'Cloud Cover', 'Jan-Feb',\n                                  'Mar-May', 'Oct-Dec', 'avgjune', 'sub'])],\n                  verbose_feature_names_out=False)"
+          ],
+          [
+            "model",
+            "XGBClassifier(base_score=None, booster=None, callbacks=None,\n              colsample_bylevel=None, colsample_bynode=None,\n              colsample_bytree=0.9, device=None, early_stopping_rounds=None,\n              enable_categorical=False, eval_metric='logloss',\n              feature_types=None, feature_weights=None, gamma=None,\n              grow_policy=None, importance_type=None,\n              interaction_constraints=None, learning_rate=0.05, max_bin=None,\n              max_cat_threshold=None, max_cat_to_onehot=None,\n              max_delta_step=None, max_depth=3, max_leaves=None,\n              min_child_weight=None, missing=nan, monotone_constraints=None,\n              multi_strategy=None, n_estimators=200, n_jobs=1,\n              num_parallel_tree=None, ...)"
+          ]
+        ],
+        "transform_input": null,
+        "verbose": false
+      }
+    },
+    "Logistic Regression (tuned)": {
+      "kind": "tuned",
+      "source_model": "Logistic Regression",
+      "cv": {
+        "accuracy": {
+          "mean": 0.7719298245614035,
+          "std": 0.07257119091222723,
+          "fold_values": [
+            0.7894736842105263,
+            0.7368421052631579,
+            0.7777777777777778,
+            0.6666666666666666,
+            0.8888888888888888
+          ]
+        },
+        "precision": {
+          "mean": 0.36904761904761907,
+          "std": 0.17235201019860816,
+          "fold_values": [
+            0.42857142857142855,
+            0.25,
+            0.3333333333333333,
+            0.16666666666666666,
+            0.6666666666666666
+          ]
+        },
+        "recall": {
+          "mean": 0.7,
+          "std": 0.26666666666666666,
+          "fold_values": [
+            1.0,
+            0.3333333333333333,
+            1.0,
+            0.5,
+            0.6666666666666666
+          ]
+        },
+        "f1": {
+          "mean": 0.46047619047619043,
+          "std": 0.16636435166726352,
+          "fold_values": [
+            0.6,
+            0.2857142857142857,
+            0.5,
+            0.25,
+            0.6666666666666666
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8109722222222222,
+          "std": 0.09723055519844331,
+          "fold_values": [
+            0.8541666666666666,
+            0.7083333333333333,
+            0.96875,
+            0.8125,
+            0.7111111111111111
+          ]
+        }
+      },
+      "test": {
+        "accuracy": 0.8260869565217391,
+        "precision": 0.4,
+        "recall": 0.6666666666666666,
+        "f1": 0.5,
+        "roc_auc": 0.65,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "training_seconds": 1.80122430017218,
+      "inference_ms_per_row": 0.1280402825922584,
+      "best_parameters": {
+        "model__C": 0.01,
+        "model__class_weight": "balanced"
+      },
+      "search_space": {
+        "model__C": [
+          0.01,
+          0.1,
+          1.0,
+          10.0
+        ],
+        "model__class_weight": [
+          null,
+          "balanced"
+        ]
+      },
+      "candidate_count": 8
+    },
+    "XGBoost (tuned)": {
+      "kind": "tuned",
+      "source_model": "XGBoost",
+      "cv": {
+        "accuracy": {
+          "mean": 0.8152046783625732,
+          "std": 0.08856126140308584,
+          "fold_values": [
+            0.7368421052631579,
+            0.8947368421052632,
+            0.9444444444444444,
+            0.7222222222222222,
+            0.7777777777777778
+          ]
+        },
+        "precision": {
+          "mean": 0.5033333333333333,
+          "std": 0.29672284112357183,
+          "fold_values": [
+            0.25,
+            0.6666666666666666,
+            1.0,
+            0.2,
+            0.4
+          ]
+        },
+        "recall": {
+          "mean": 0.5333333333333333,
+          "std": 0.1247219128924647,
+          "fold_values": [
+            0.3333333333333333,
+            0.6666666666666666,
+            0.5,
+            0.5,
+            0.6666666666666666
+          ]
+        },
+        "f1": {
+          "mean": 0.4809523809523809,
+          "std": 0.17063307492541824,
+          "fold_values": [
+            0.2857142857142857,
+            0.6666666666666666,
+            0.6666666666666666,
+            0.2857142857142857,
+            0.5
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.6856944444444444,
+          "std": 0.061602506662963755,
+          "fold_values": [
+            0.7083333333333333,
+            0.65625,
+            0.78125,
+            0.59375,
+            0.688888888888889
+          ]
+        }
+      },
+      "test": {
+        "accuracy": 0.8695652173913043,
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285714,
+        "roc_auc": 0.7166666666666666,
+        "confusion_matrix": [
+          [
+            18,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "training_seconds": 18.307809400139377,
+      "inference_ms_per_row": 0.12760200001218397,
+      "best_parameters": {
+        "model__colsample_bytree": 1.0,
+        "model__learning_rate": 0.03,
+        "model__max_depth": 3,
+        "model__n_estimators": 100,
+        "model__subsample": 1.0
+      },
+      "search_space": {
+        "model__n_estimators": [
+          100,
+          250
+        ],
+        "model__max_depth": [
+          1,
+          2,
+          3
+        ],
+        "model__learning_rate": [
+          0.03,
+          0.1
+        ],
+        "model__subsample": [
+          0.8,
+          1.0
+        ],
+        "model__colsample_bytree": [
+          0.8,
+          1.0
+        ]
+      },
+      "candidate_count": 48
+    }
+  }
+}

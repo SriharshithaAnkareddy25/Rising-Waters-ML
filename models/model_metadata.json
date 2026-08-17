@@ -1,0 +1,39 @@
+{
+  "model_name": "Logistic Regression (tuned)",
+  "feature_names": [
+    "Temp",
+    "Humidity",
+    "Cloud Cover",
+    "Jan-Feb",
+    "Mar-May",
+    "Oct-Dec",
+    "avgjune",
+    "sub"
+  ],
+  "positive_class": 1,
+  "decision_threshold": 0.5,
+  "training_rows": 92,
+  "test_rows": 23,
+  "random_state": 42,
+  "sklearn_version": "1.7.2",
+  "xgboost_version": "3.0.4",
+  "python_version": "3.13.5",
+  "test_metrics": {
+    "accuracy": 0.8260869565217391,
+    "precision": 0.4,
+    "recall": 0.6666666666666666,
+    "f1": 0.5,
+    "roc_auc": 0.65,
+    "confusion_matrix": [
+      [
+        17,
+        3
+      ],
+      [
+        1,
+        2
+      ]
+    ]
+  },
+  "warning": "Research prototype; probabilities are not calibrated flood-warning probabilities."
+}
