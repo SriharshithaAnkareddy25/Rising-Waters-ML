@@ -126,6 +126,20 @@ python app/app.py
 
 Open `http://127.0.0.1:5000`. Flask loads one serialized pipeline containing the exact training preprocessing and estimator. Inputs are converted to a named DataFrame, checked for missing/unexpected fields, validated against observed dataset ranges, and passed to the pipeline without duplicated scaling code.
 
+## 📸 Screenshots
+
+> *Explore the current user interface of Rising Waters.*
+
+| Home Page | Introduction Page |
+|---|---|
+| <img src="reports/ui/home.png" alt="Rising Waters home page" width="100%"> | <img src="reports/ui/introduction.png" alt="Rising Waters introduction page" width="100%"> |
+
+| Prediction Form | Prediction Result |
+|---|---|
+| <img src="reports/ui/prediction_form.png" alt="Validated eight-field flood-risk prediction form" width="100%"> | <img src="reports/ui/prediction_result.png" alt="Example prediction result with safety disclaimer" width="100%"> |
+
+These screenshots show the leakage-aware eight-field form and the prototype safety language used by the current application.
+
 ## Project structure
 
 ```text
