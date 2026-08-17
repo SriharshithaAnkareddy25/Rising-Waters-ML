@@ -19,18 +19,18 @@
   <main>
     <h2>Predict Flood Risk</h2>
     <form action="/predict" method="POST">
-      <input type="number" name="temp" placeholder="Temperature (°C)" required />
-      <input type="number" name="humidity" placeholder="Humidity (%)" required />
-      <input type="number" name="cloud_cover" placeholder="Cloud Cover (%)" required />
-      <input type="number" name="annual_rainfall" placeholder="Annual Rainfall (mm)" required />
-      <input type="number" name="rain_janfeb" placeholder="Jan-Feb Rainfall (mm)" required />
-      <input type="number" name="rain_mar_may" placeholder="Mar-May Rainfall (mm)" required />
-      <input type="number" name="rain_jun_sep" placeholder="Jun-Sep Rainfall (mm)" required />
-      <input type="number" name="rain_octdec" placeholder="Oct-Dec Rainfall (mm)" required />
-      <input type="number" name="avg_june" placeholder="Average June Rainfall (mm)" required />
-      <input type="number" name="sub" placeholder="Sub-Division Index" required />
+      {% if error %}<p class="error">{{ error }}</p>{% endif %}
+      <input type="number" step="any" min="28" max="31" name="temp" placeholder="Temperature (°C)" value="{{ values.temp if values else '' }}" required />
+      <input type="number" step="any" min="70" max="79" name="humidity" placeholder="Humidity (%)" value="{{ values.humidity if values else '' }}" required />
+      <input type="number" step="any" min="30" max="44" name="cloud_cover" placeholder="Cloud Cover (%)" value="{{ values.cloud_cover if values else '' }}" required />
+      <input type="number" step="any" min="0.3" max="98.1" name="rain_janfeb" placeholder="Jan-Feb Rainfall (mm)" value="{{ values.rain_janfeb if values else '' }}" required />
+      <input type="number" step="any" min="89.9" max="915.2" name="rain_mar_may" placeholder="Mar-May Rainfall (mm)" value="{{ values.rain_mar_may if values else '' }}" required />
+      <input type="number" step="any" min="166.6" max="823.3" name="rain_octdec" placeholder="Oct-Dec Rainfall (mm)" value="{{ values.rain_octdec if values else '' }}" required />
+      <input type="number" step="any" min="65.6" max="366.066667" name="avg_june" placeholder="Average June Rainfall (mm)" value="{{ values.avg_june if values else '' }}" required />
+      <input type="number" step="any" min="34.2" max="982.7" name="sub" placeholder="Sub-Division value (definition undocumented)" value="{{ values.sub if values else '' }}" required />
       <button type="submit">Predict Flood Risk</button>
     </form>
+    <p><small>Research prototype only. Do not use this output as an emergency warning.</small></p>
     
   </main>
 </body>
