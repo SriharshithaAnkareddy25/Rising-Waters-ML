@@ -71,15 +71,43 @@ Detailed machine-readable results are in [`reports/metrics.json`](reports/metric
 
 ## Visualizations
 
-| Question | Output |
-|---|---|
-| Is the target imbalanced? | [Class distribution](reports/figures/class_distribution.png) |
-| Are distributions unusual? | [Feature distributions](reports/figures/feature_distributions.png) |
-| Which inputs are redundant? | [Correlation matrix](reports/figures/correlation_matrix.png) |
-| What errors did the selected model make? | [Confusion matrix](reports/figures/confusion_matrix.png) |
-| How do rankings compare? | [ROC curves](reports/figures/roc_curve.png) |
-| How does the selected model use features? | [Selected-model interpretation](reports/figures/feature_importance.png) |
-| What are the linear directions? | [Logistic coefficients](reports/figures/logistic_coefficients.png) |
+### Target balance
+
+The dataset is strongly imbalanced: only 16 of 115 rows are positive.
+
+![Class distribution showing 99 non-flood and 16 flood rows](reports/figures/class_distribution.png)
+
+### Feature distributions
+
+These histograms expose the small sample size, discrete weather measurements, skew, and extreme rainfall observations.
+
+![Histograms of the ten original input features](reports/figures/feature_distributions.png)
+
+### Correlation and redundancy
+
+The matrix highlights the strong relationship between `ANNUAL` and `Jun-Sep`, as well as correlation between `avgjune` and `sub`.
+
+![Pearson correlation matrix for features and target](reports/figures/correlation_matrix.png)
+
+### Final-model errors
+
+The selected tuned Logistic Regression detected two of three test floods, missed one, and produced three false alerts.
+
+![Confusion matrix for tuned Logistic Regression](reports/figures/confusion_matrix.png)
+
+### ROC comparison
+
+ROC curves compare ranking behavior on the untouched test set. Because it contains only three positive rows, small differences must not be overinterpreted.
+
+![ROC curves for Logistic Regression, Decision Tree, Random Forest, and XGBoost](reports/figures/roc_curve.png)
+
+### Model interpretation
+
+The selected-model view and coefficient plot show how standardized inputs influence the Logistic Regression score.
+
+![Selected model feature interpretation](reports/figures/feature_importance.png)
+
+![Standardized Logistic Regression coefficients](reports/figures/logistic_coefficients.png)
 
 Correlation, coefficients, and feature importance describe associations in this dataset. They do not establish causation.
 
@@ -97,6 +125,20 @@ python app/app.py
 ```
 
 Open `http://127.0.0.1:5000`. Flask loads one serialized pipeline containing the exact training preprocessing and estimator. Inputs are converted to a named DataFrame, checked for missing/unexpected fields, validated against observed dataset ranges, and passed to the pipeline without duplicated scaling code.
+
+## 📸 Screenshots
+
+> *Explore the current user interface of Rising Waters.*
+
+| Home Page | Introduction Page |
+|---|---|
+| <img src="reports/ui/home.png" alt="Rising Waters home page" width="100%"> | <img src="reports/ui/introduction.png" alt="Rising Waters introduction page" width="100%"> |
+
+| Prediction Form | Prediction Result |
+|---|---|
+| <img src="reports/ui/prediction_form.png" alt="Validated eight-field flood-risk prediction form" width="100%"> | <img src="reports/ui/prediction_result.png" alt="Example prediction result with safety disclaimer" width="100%"> |
+
+These screenshots show the leakage-aware eight-field form and the prototype safety language used by the current application.
 
 ## Project structure
 
